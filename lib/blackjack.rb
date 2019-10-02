@@ -11,7 +11,7 @@ def display_card_total(card_total)
 end
 
 def prompt_user
-  puts "Tyoe 'h' to hit or 's' to stay"
+  puts "Type 'h' to hit or 's' to stay"
 end
 
 def get_user_input
@@ -28,13 +28,11 @@ def initial_round
   
   sum = card1 + card2
   display_card_total(sum)
-  
+  return sum
 end
 
 def invalid_command()
   puts "Please enter a valid command"
-  prompt_user()
-  get_user_input
 end
 
 def hit?(card_total)
@@ -42,15 +40,14 @@ def hit?(card_total)
   user_input = get_user_input()
   if user_input == "s"
     card_total
-  elseif user_input == "h"
+  elsif user_input == "h"
     card_total += deal_card()
   else
     invalid_command()
+    prompt_user()
+    get_user_input()
   end
-end
-
-def invalid_command
-  # code invalid_command here
+  return card_total
 end
 
 #####################################################
@@ -58,6 +55,13 @@ end
 #####################################################
 
 def runner
-  # code runner here
+  welcome #introduce the game
+  # sleep 0.75
+  card_total = initial_round #determine your current total & tell user what number they currently have
+  until card_total > 21 #continue game until user loses
+    card_total = hit?(card_total)
+    display_card_total(card_total)
+  end
+  end_game(card_total) #prints out once user has lost
 end
     
